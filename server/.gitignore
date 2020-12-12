@@ -1,0 +1,16 @@
+# Dependency directory
+node_modules
+
+# Coverage directory
+coverage
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist
+
+# env
+.env
+junit.xml
