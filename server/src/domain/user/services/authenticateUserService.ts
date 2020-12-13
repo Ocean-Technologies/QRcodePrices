@@ -1,21 +1,29 @@
+import { IAuthToken } from '@domain/shared/auth/IAuthToken'
+import { BadRequestError } from '@domain/shared/errors/BadRequestError'
 import { UserEntity } from '../entities/user'
-import { IUserRepository } from '../repositories/IUserRepository'
+import { AuthParams, IUserRepository } from '../repositories/IUserRepository'
 
-interface AuthRequest {
-  password: string
-  email: string
+interface Response {
+  user: UserEntity
+  token: string
 }
 
 export class AuthenticateUserService {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    private readonly userRepository: IUserRepository,
+    private readonly tokenCreator: IAuthToken,
+  ) {}
 
   public async execute({
     password,
     email,
-  }: AuthRequest): Promise<UserEntity | undefined> {
-    // TODO authenticate user
+  }: AuthParams): Promise<Response | undefined> {
     const obj = { password, email }
-
-    return this.userRepository.auth(obj)
+    const user = await this.userRepository.auth(obj)
+    if (!user) {
+      throw new BadRequestError('User not found')
+    }
+    const token = await this.tokenCreator.newToken(user)
+    return { user, token }
   }
 }

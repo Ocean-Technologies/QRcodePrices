@@ -4,14 +4,20 @@ import { UserEntity } from '@domain/user/entities/user'
 import { FakeUserRepository } from '@domain/user/repositories/fakes/FakeUserRepository'
 import { AuthenticateUserController } from '@interface/api/controllers/user/authenticateUserController'
 import { AuthenticateUserService } from '@domain/user/services/authenticateUserService'
+import { JsonWebToken } from '@infrastructure/auth/jsonwebtoken'
 // import ensureAuthenticated from '@interface/api/middlewares/ensureAuthenticated'
 
 export const authRoute = async (app: Application): Promise<void> => {
+  const jsonwebtoken = new JsonWebToken()
+
   const userRepository = new FakeUserRepository([
     new UserEntity(1, 'nathan', 'nathan@test.com', '123', 5),
   ])
 
-  const authenticateUserService = new AuthenticateUserService(userRepository)
+  const authenticateUserService = new AuthenticateUserService(
+    userRepository,
+    jsonwebtoken,
+  )
 
   const controller = new AuthenticateUserController(authenticateUserService)
 
