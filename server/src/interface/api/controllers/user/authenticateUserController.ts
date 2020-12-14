@@ -13,8 +13,6 @@ export class AuthenticateUserController {
       password,
     })
 
-    response.status(200).json({
-      data: authenticatedUser,
-    })
+    response.status(200).json(authenticatedUser)
   }
 }

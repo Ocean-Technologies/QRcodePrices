@@ -13,8 +13,6 @@ export class RegisterUserController {
       confirmPassword,
     })
 
-    response.status(200).json({
-      data: User,
-    })
+    response.status(200).json(User)
   }
 }
