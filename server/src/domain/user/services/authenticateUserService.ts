@@ -18,10 +18,12 @@ export class AuthenticateUserService {
     password,
     email,
   }: AuthParams): Promise<Response | undefined> {
-    const obj = { password, email }
-    const user = await this.userRepository.auth(obj)
+    const user = await this.userRepository.findByEmail(email)
     if (!user) {
       throw new BadRequestError('User not found')
+    }
+    if (user.password !== password) {
+      throw new BadRequestError('User or email incorrect')
     }
     const token = await this.tokenCreator.newToken(user)
     return { user, token }

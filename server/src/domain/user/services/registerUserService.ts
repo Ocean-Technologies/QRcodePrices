@@ -1,3 +1,4 @@
+import { BadRequestError } from '@domain/shared/errors/BadRequestError'
 import { UserEntity } from '../entities/user'
 import { IUserRepository } from '../repositories/IUserRepository'
 
@@ -17,8 +18,10 @@ export class RegisterUserService {
     password,
     confirmPassword,
   }: AuthRequest): Promise<UserEntity | undefined> {
-    const obj = { password, email, name, confirmPassword }
-
-    return this.userRepository.register(obj)
+    if (password !== confirmPassword) {
+      throw new BadRequestError('passwords dont match')
+    }
+    const discount = Math.floor(Math.random() * 30)
+    return this.userRepository.register({ password, email, name, discount })
   }
 }

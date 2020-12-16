@@ -8,16 +8,15 @@ export type RegisterParams = {
   name: string
   email: string
   password: string
-  confirmPassword: string
+  discount: number
 }
 
 export interface IUserRepository {
-  auth({ password, email }: AuthParams): Promise<UserEntity | undefined>
   findByEmail(email: string): Promise<UserEntity | undefined>
   register({
     password,
     email,
     name,
-    confirmPassword,
+    discount,
   }: RegisterParams): Promise<UserEntity | undefined>
 }

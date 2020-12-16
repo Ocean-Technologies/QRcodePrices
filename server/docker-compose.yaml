@@ -1,4 +1,6 @@
 version: '3'
+networks:
+  qr-code-nw:
 services:
   qr-code-prices-server:
     build: .
@@ -8,4 +10,18 @@ services:
     ports:
       - 8888:8888
       - 9229:9229
+    networks: 
+      - qr-code-nw
+    depends_on:
+      - mongodb_container
     command: yarn start
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    networks: 
+      - qr-code-nw
+    
