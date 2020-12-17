@@ -22,7 +22,7 @@ export class RegisterUserService {
       throw new BadRequestError('passwords dont match')
     }
 
-    const user = this.userRepository.findByEmail(email)
+    const user = await this.userRepository.findByEmail(email)
 
     if (user) {
       throw new BadRequestError('Email address already used')

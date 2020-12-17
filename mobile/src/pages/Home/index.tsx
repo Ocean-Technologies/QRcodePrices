@@ -36,12 +36,12 @@ const Home: React.FC = () => {
     async ({ type, data }) => {
       setScanned(true)
       try {
-        const { data: response, statusText } = await api.get(
+        const { data: response } = await api.get(
           `/price/${user.id}/${data}`,
         )
-        Alert.alert(statusText, response)
+        alert(`O preço desse produto pra você é R$${response.myPrice}`)
       } catch (err) {
-        Alert.alert(err.statusCode, err.message)
+        alert(err.message)
       }
     },
     [user, api],

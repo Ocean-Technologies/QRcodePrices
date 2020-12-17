@@ -50,8 +50,8 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       })
-
-      await api.post('/users', { ...data, confirmPassword: data.password })
+      console.log(data)
+      await api.post('/user/register', { ...data, confirmPassword: data.password })
 
       Alert.alert(
         'Cadastro realizado com sucesso',
@@ -66,7 +66,6 @@ const SignUp: React.FC = () => {
 
         return
       }
-
       Alert.alert('Erro no cadastro', 'Ocorreu um erro ao fazer cadastro')
     }
   }, [])
