@@ -10,6 +10,7 @@ import {
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useAuth } from '../../hooks/auth'
+import api from '../../services/api';
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth()
@@ -37,13 +38,16 @@ const Home: React.FC = () => {
     }
   },[hasCameraPermission])
 
-  const handleBarCodeScanned = useCallback(({
+  const handleBarCodeScanned = useCallback(async ({
     type,
     data
   }) => {
     setScanned(true)
     //TODO enviar para o backend os dados de usuario e produto
-    alert(`Bar code with type ${user.id} and data ${data} has been scanned!`);
+
+    const {data:response} = await api.get(`/price/${user.id}/${data}`)
+
+    alert(`Price is ${response.myPrice}`);
   },[user])
 
   const handleSignOut = useCallback(()=>{
@@ -75,13 +79,12 @@ const Home: React.FC = () => {
       <Button onPress={handleSignOut}> Deslogar</Button>
 
       {scanned && ( 
-        <Button title = {
-            'Tap to Scan Again'
-          }
+        <Button 
+            
           onPress = {
             () => setScanned(false)
           }
-        />
+        >Tap to Scan Again</Button>
       )} 
     </View>
   }

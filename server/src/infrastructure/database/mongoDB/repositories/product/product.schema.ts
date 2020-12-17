@@ -7,4 +7,12 @@ const productsSchema = new Schema<ProductEntity>({
   price: Number,
 })
 
+productsSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id
+  },
+})
+
 export { productsSchema }

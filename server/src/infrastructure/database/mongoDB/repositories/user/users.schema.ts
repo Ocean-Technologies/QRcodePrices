@@ -9,6 +9,14 @@ const usersSchema = new Schema<UserEntity>({
   discount: Number,
 })
 
+usersSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id
+  },
+})
+
 usersSchema.statics.findByEmail = findByEmail
 
 export { usersSchema }

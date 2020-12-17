@@ -70,7 +70,10 @@ const SignIn: React.FC = () => {
           return
         }
 
-        Alert.alert('Erro na autenticação', 'Ocorreu um erro durante a autenticação, tente novamente')
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro durante a autenticação, tente novamente',
+        )
 
         // addToast({
         //   type: 'error',

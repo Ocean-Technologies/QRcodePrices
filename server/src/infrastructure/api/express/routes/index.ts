@@ -5,11 +5,10 @@ import { findProductsRoute } from './products/findProduct.routes'
 import { listProductsRoute } from './products/listProducts.routes'
 import { myPriceRoute } from './price/myPriceOnProduct.routes'
 
-export const routes = [
-  authRoute,
-  registerRoute,
+export const authRoutes = [
   insertProductRoute,
   findProductsRoute,
   listProductsRoute,
   myPriceRoute,
 ]
+export const routes = [authRoute, registerRoute]

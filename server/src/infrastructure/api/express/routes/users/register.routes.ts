@@ -4,7 +4,6 @@ import { RegisterUserController } from '@interface/api/controllers/user/register
 import { RegisterUserService } from '@domain/qrCode/services/registerUserService'
 import { UserMongoRepository } from '@infrastructure/database/mongoDB/repositories/user'
 import { createMongoConnection } from '@infrastructure/database/mongoDB/Connector'
-// import ensureAuthenticated from '@interface/api/middlewares/ensureAuthenticated'
 
 export const registerRoute = async (app: Application): Promise<void> => {
   const mongoConnection = await createMongoConnection()
@@ -17,6 +16,5 @@ export const registerRoute = async (app: Application): Promise<void> => {
 
   const controller = new RegisterUserController(registerUserService)
 
-  // app.use(ensureAuthenticated) - Se quiser que a rota seja atenticada usa isso
   app.post('/user/register', controller.list.bind(controller))
 }

@@ -21,6 +21,12 @@ export class RegisterUserService {
     if (password !== confirmPassword) {
       throw new BadRequestError('passwords dont match')
     }
+
+    const user = this.userRepository.findByEmail(email)
+
+    if (user) {
+      throw new BadRequestError('Email address already used')
+    }
     const discount = Math.floor(Math.random() * 30)
     return this.userRepository.register({ password, email, name, discount })
   }

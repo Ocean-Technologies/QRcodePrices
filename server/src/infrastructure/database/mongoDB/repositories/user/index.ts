@@ -8,12 +8,14 @@ export class UserMongoRepository implements IUserRepository {
 
   async findByEmail(email: string): Promise<UserEntity | null> {
     const userModel = new UsersModel(this.MongoDB).model
-    return userModel.findOne({ email })
+
+    return await userModel.findOne({ email })
   }
 
   async findById(id: string): Promise<UserEntity | null> {
     const userModel = new UsersModel(this.MongoDB).model
-    return userModel.findById(id)
+
+    return await userModel.findById(id)
   }
 
   async register({

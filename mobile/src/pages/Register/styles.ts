@@ -20,7 +20,7 @@ export const BackToSignIn = styled.TouchableOpacity`
   left: 0;
   bottom: 0;
   right: 0;
-  background: #F0EDF5;
+  background: #f0edf5;
   border-top-width: 1px;
   border-color: #232129;
   padding: 16px 0 ${16 + getBottomSpace()}px;
@@ -30,7 +30,7 @@ export const BackToSignIn = styled.TouchableOpacity`
 `
 
 export const BackToSignInText = styled.Text`
-  color: #6548A3;
+  color: #6548a3;
   font-size: 18px;
   font-family: sans-serif;
   margin-left: 16px;

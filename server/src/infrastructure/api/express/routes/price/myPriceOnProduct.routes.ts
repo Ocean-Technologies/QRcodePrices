@@ -6,7 +6,6 @@ import { MyPriceController } from '@interface/api/controllers/price/myPriceContr
 import { MyPriceService } from '@domain/qrCode/services/myPriceService'
 import { ProductMongoRepository } from '@infrastructure/database/mongoDB/repositories/product'
 import { UserMongoRepository } from '@infrastructure/database/mongoDB/repositories/user'
-import ensureAuthenticated from '@interface/api/middlewares/ensureAuthenticated'
 
 export const myPriceRoute = async (app: Application): Promise<void> => {
   const mongoConnection = await createMongoConnection()
@@ -24,6 +23,5 @@ export const myPriceRoute = async (app: Application): Promise<void> => {
 
   const controller = new MyPriceController(insertProductService)
 
-  app.use(ensureAuthenticated)
   app.get('/price/:userId/:productId', controller.find.bind(controller))
 }

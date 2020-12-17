@@ -11,12 +11,12 @@ export class ProductMongoRepository implements IProductRepository {
 
   async findById(id: string): Promise<ProductEntity | null> {
     const productsModel = new ProductsModel(this.MongoDB).model
-    return productsModel.findById(id)
+    return await productsModel.findById(id)
   }
 
   async list(): Promise<ProductEntity[] | null> {
     const productsModel = new ProductsModel(this.MongoDB).model
-    return productsModel.find()
+    return await productsModel.find()
   }
 
   async register({
@@ -26,6 +26,6 @@ export class ProductMongoRepository implements IProductRepository {
   }: InsertParams): Promise<ProductEntity | null> {
     const productsModel = new ProductsModel(this.MongoDB).model
 
-    return productsModel.create({ name, price, imgUrl })
+    return await productsModel.create({ name, price, imgUrl })
   }
 }
