@@ -1,96 +1,82 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import Button from '../../components/Button'
-import {
-  Text,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native'
 // import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import * as Permissions from 'expo-permissions'
+import { BarCodeScanner } from 'expo-barcode-scanner'
 import { useAuth } from '../../hooks/auth'
-import api from '../../services/api';
+import api from '../../services/api'
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth()
-  const [hasCameraPermission,setHasCameraPermission] = useState<boolean | null>(null)
-  const [scanned,setScanned] = useState<boolean | null>(null)
+  const [hasCameraPermission, setHasCameraPermission] = useState<
+    boolean | null
+  >(null)
+  const [scanned, setScanned] = useState<boolean | null>(null)
 
-  useEffect(()=>{
-    const exec = async ()=> {
-      const {
-        status
-      } = await Permissions.askAsync(Permissions.CAMERA);
-      setHasCameraPermission(status === 'granted');
-    } 
-    exec();
+  useEffect(() => {
+    const exec = async () => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA)
+      setHasCameraPermission(status === 'granted')
+    }
+    exec()
+  }, [])
 
-  },[])
-
-  const rendeVariable = useMemo(()=>{
+  const rendeVariable = useMemo(() => {
     if (hasCameraPermission === null) {
-      return <Text> Requesting
-      for camera permission </Text>;
+      return <Text> Requesting for camera permission </Text>
     }
     if (hasCameraPermission === false) {
-      return <Text> No access to camera </Text>;
+      return <Text> No access to camera </Text>
     }
-  },[hasCameraPermission])
+  }, [hasCameraPermission])
 
-  const handleBarCodeScanned = useCallback(async ({
-    type,
-    data
-  }) => {
-    setScanned(true)
-    //TODO enviar para o backend os dados de usuario e produto
-
-    const {data:response} = await api.get(`/price/${user.id}/${data}`)
-
-    alert(`Price is ${response.myPrice}`);
-  },[user])
-
-  const handleSignOut = useCallback(()=>{
-    signOut()
-  },
-    [signOut],
+  const handleBarCodeScanned = useCallback(
+    async ({ type, data }) => {
+      setScanned(true)
+      try {
+        const { data: response, statusText } = await api.get(
+          `/price/${user.id}/${data}`,
+        )
+        Alert.alert(statusText, response)
+      } catch (err) {
+        Alert.alert(err.statusCode, err.message)
+      }
+    },
+    [user, api],
   )
+
+  const handleSignOut = useCallback(() => {
+    signOut()
+  }, [signOut])
 
   return (
     <>
-    {rendeVariable && !rendeVariable ? rendeVariable : 
-    
-    <View style = {
-        {
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-        }
-      }
-    >
-      <BarCodeScanner onBarCodeScanned = {
-        scanned ? undefined : handleBarCodeScanned
-      }
-      style = {
-        StyleSheet.absoluteFillObject
-      }
-      />
+      {rendeVariable && !rendeVariable ? (
+        rendeVariable
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          />
 
-      <Button onPress={handleSignOut}> Deslogar</Button>
+          <Button onPress={handleSignOut}> Deslogar</Button>
 
-      {scanned && ( 
-        <Button 
-            
-          onPress = {
-            () => setScanned(false)
-          }
-        >Tap to Scan Again</Button>
-      )} 
-    </View>
-  }
-  </>
-
-  );
+          {scanned && (
+            <Button onPress={() => setScanned(false)}>Tap to Scan Again</Button>
+          )}
+        </View>
+      )}
+    </>
+  )
 }
 
 export default Home
