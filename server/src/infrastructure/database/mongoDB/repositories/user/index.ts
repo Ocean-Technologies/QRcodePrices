@@ -1,14 +1,19 @@
-import { IUserRepository } from '@domain/user/repositories/IUserRepository'
-import { UserEntity } from '@domain/user/entities/user'
+import { IUserRepository } from '@domain/qrCode/repositories/IUserRepository'
+import { UserEntity } from '@domain/qrCode/entities/user'
 import { Mongoose } from 'mongoose'
 import { UsersModel } from './users.model'
 
 export class UserMongoRepository implements IUserRepository {
-  private constructor(private MongoDB: Mongoose) {}
+  constructor(private MongoDB: Mongoose) {}
 
   async findByEmail(email: string): Promise<UserEntity | null> {
     const userModel = new UsersModel(this.MongoDB).model
     return userModel.findOne({ email })
+  }
+
+  async findById(id: string): Promise<UserEntity | null> {
+    const userModel = new UsersModel(this.MongoDB).model
+    return userModel.findById(id)
   }
 
   async register({

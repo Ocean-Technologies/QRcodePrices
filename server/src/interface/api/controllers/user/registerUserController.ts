@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { RegisterUserService } from '@domain/user/services/registerUserService'
+import { RegisterUserService } from '@domain/qrCode/services/registerUserService'
 export class RegisterUserController {
   constructor(private readonly registerUserService: RegisterUserService) {}
 

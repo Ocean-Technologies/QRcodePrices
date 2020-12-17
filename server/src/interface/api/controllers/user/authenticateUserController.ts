@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { AuthenticateUserService } from '@domain/user/services/authenticateUserService'
+import { AuthenticateUserService } from '@domain/qrCode/services/authenticateUserService'
 export class AuthenticateUserController {
   constructor(
     private readonly authenticateUserService: AuthenticateUserService,

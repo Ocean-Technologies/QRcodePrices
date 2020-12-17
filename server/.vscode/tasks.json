@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "rebuild:docker",
-      "command": "yarn",
-      "args": ["rebuild:docker"],
+      "label": "run rebuild:docker",
+      "command": "npm",
+      "args": ["run", "rebuild:docker"],
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -25,9 +25,9 @@
       }
     },
     {
-      "label": "start:docker",
-      "command": "yarn",
-      "args": ["start:docker"],
+      "label": "run start:docker",
+      "command": "npm",
+      "args": ["run", "start:docker"],
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -48,9 +48,9 @@
       }
     },
     {
-      "label": "stop:docker",
-      "command": "yarn",
-      "args": ["stop:docker"],
+      "label": "run stop:docker",
+      "command": "npm",
+      "args": ["run", "stop:docker"],
       "isBackground": true,
       "problemMatcher": {
         "pattern": {

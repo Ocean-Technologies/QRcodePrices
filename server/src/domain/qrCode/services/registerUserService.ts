@@ -17,7 +17,7 @@ export class RegisterUserService {
     email,
     password,
     confirmPassword,
-  }: AuthRequest): Promise<UserEntity | undefined> {
+  }: AuthRequest): Promise<UserEntity | null> {
     if (password !== confirmPassword) {
       throw new BadRequestError('passwords dont match')
     }

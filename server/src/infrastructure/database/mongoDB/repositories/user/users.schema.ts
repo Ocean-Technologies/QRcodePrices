@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose'
-import { UserEntity } from '@domain/user/entities/user'
+import { UserEntity } from '@domain/qrCode/entities/user'
 import { findByEmail } from './users.statics'
 
 const usersSchema = new Schema<UserEntity>({

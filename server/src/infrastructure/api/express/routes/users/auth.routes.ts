@@ -1,7 +1,7 @@
 import { Application } from 'express'
 
 import { AuthenticateUserController } from '@interface/api/controllers/user/authenticateUserController'
-import { AuthenticateUserService } from '@domain/user/services/authenticateUserService'
+import { AuthenticateUserService } from '@domain/qrCode/services/authenticateUserService'
 import { JsonWebToken } from '@infrastructure/auth/jsonwebtoken'
 import { createMongoConnection } from '@infrastructure/database/mongoDB/Connector'
 import { UserMongoRepository } from '@infrastructure/database/mongoDB/repositories/user'

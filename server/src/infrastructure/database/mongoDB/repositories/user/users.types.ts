@@ -1,5 +1,5 @@
 import { Document, Model } from 'mongoose'
-import { UserEntity } from '@domain/user/entities/user'
+import { UserEntity } from '@domain/qrCode/entities/user'
 
 export interface IUserDocument extends UserEntity, Document {}
 export interface IUserModel extends Model<IUserDocument> {
