@@ -1,8 +1,8 @@
 import { MongoConnector } from '@infrastructure/database/mongoDB/MongoConnector'
 import { MongoError } from './MongoError'
-import { Db } from 'mongodb'
+import { Mongoose } from 'mongoose'
 
-export async function createMongoConnection(): Promise<Db | undefined> {
+export async function createMongoConnection(): Promise<Mongoose | undefined> {
   try {
     const Connected = MongoConnector.isConnected()
     if (Connected) {

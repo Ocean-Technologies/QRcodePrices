@@ -1,19 +1,14 @@
 import { IUserRepository } from '@domain/user/repositories/IUserRepository'
 import { UserEntity } from '@domain/user/entities/user'
-import { Db } from 'mongodb'
-
-const decode = ({ _id, ...rest }: { _id: string }) => ({
-  ...rest,
-  id: _id,
-})
+import { Mongoose } from 'mongoose'
+import { UsersModel } from './users.model'
 
 export class UserMongoRepository implements IUserRepository {
-  constructor(private MongoDB: Db) {}
+  private constructor(private MongoDB: Mongoose) {}
 
-  async findByEmail(email: string): Promise<UserEntity | undefined> {
-    const user = await this.MongoDB.collection<UserEntity>('test').find()
-
-    return user
+  async findByEmail(email: string): Promise<UserEntity | null> {
+    const userModel = new UsersModel(this.MongoDB).model
+    return userModel.findOne({ email })
   }
 
   async register({
@@ -21,8 +16,8 @@ export class UserMongoRepository implements IUserRepository {
     email,
     name,
     discount,
-  }: UserEntity): Promise<UserDocument> {
-    const user = new User({ name, email, password, discount })
-    return await user.save()
+  }: UserEntity): Promise<UserEntity | null> {
+    const userModel = new UsersModel(this.MongoDB).model
+    return userModel.create({ password, email, name, discount })
   }
 }

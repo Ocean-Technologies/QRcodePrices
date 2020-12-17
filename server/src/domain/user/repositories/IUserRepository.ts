@@ -12,11 +12,11 @@ export type RegisterParams = {
 }
 
 export interface IUserRepository {
-  findByEmail(email: string): Promise<UserEntity | undefined>
+  findByEmail(email: string): Promise<UserEntity | null>
   register({
     password,
     email,
     name,
     discount,
-  }: RegisterParams): Promise<UserEntity | undefined>
+  }: RegisterParams): Promise<UserEntity | null>
 }
