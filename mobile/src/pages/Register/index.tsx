@@ -50,7 +50,6 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       })
-      console.log(data)
       await api.post('/user/register', { ...data, confirmPassword: data.password })
 
       Alert.alert(

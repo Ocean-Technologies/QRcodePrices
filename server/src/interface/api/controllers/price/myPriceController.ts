@@ -7,8 +7,8 @@ export class MyPriceController {
   async find(request: Request, response: Response): Promise<void> {
     const { userId, productId } = request.params
 
-    const Products = await this.myPriceService.execute(userId, productId)
+    const price = await this.myPriceService.execute(userId, productId)
 
-    response.status(200).json(Products)
+    response.status(200).json(price)
   }
 }
